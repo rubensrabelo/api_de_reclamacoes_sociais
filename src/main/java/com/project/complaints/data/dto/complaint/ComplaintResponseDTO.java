@@ -1,18 +1,15 @@
-package com.project.complaints.model;
+package com.project.complaints.data.dto.complaint;
 
 import com.project.complaints.model.embedded.Address;
 import com.project.complaints.model.enums.StatusEnum;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
-@Document(collection = "complaints")
-public class Complaint implements Serializable {
+public class ComplaintResponseDTO extends RepresentationModel<ComplaintResponseDTO> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -23,19 +20,14 @@ public class Complaint implements Serializable {
     private Address address;
     private StatusEnum status;
     private String imageUrl;
-
-    @CreatedDate
     private Instant createdDate;
-
-    @LastModifiedDate
     private Instant updatedDate;
     private boolean isAnonymous;
 
-    private Complaint() {
-        this.status = StatusEnum.PENDING;
+    private ComplaintResponseDTO() {
     }
 
-    public Complaint(String title, String description, Address address, String imageUrl, boolean isAnonymous) {
+    public ComplaintResponseDTO(String title, String description, Address address, String imageUrl, boolean isAnonymous) {
         this.title = title;
         this.description = description;
         this.address = address;
@@ -118,7 +110,7 @@ public class Complaint implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Complaint complaint = (Complaint) o;
+        ComplaintResponseDTO complaint = (ComplaintResponseDTO) o;
         return isAnonymous == complaint.isAnonymous && Objects.equals(id, complaint.id) && Objects.equals(title, complaint.title) && Objects.equals(description, complaint.description) && Objects.equals(address, complaint.address) && status == complaint.status && Objects.equals(imageUrl, complaint.imageUrl) && Objects.equals(createdDate, complaint.createdDate) && Objects.equals(updatedDate, complaint.updatedDate);
     }
 
