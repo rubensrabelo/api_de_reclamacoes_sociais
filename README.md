@@ -4,7 +4,7 @@
 classDiagram
   direction LR
   class User {
-    _id: String
+    id: String
     firstName: String
     lastName: String
     email: String
@@ -14,20 +14,23 @@ classDiagram
   class Address {
     <<embedded>>
     street: String
+    number: String
     neighborhood: String
     city: String
     state: String
+    postalCode: String
+    complement: String
   }
   
   class Complaint {
-    _id: String
+    id: String
     title: String
     description: String
     address: Address
     status: StatusEnum
-    image_url: String
-    created_date: Instant
-    updated_date: Instant
+    imageUrl: String
+    createdDate: Instant
+    updatedDate: Instant
     isAnonymous: boolean
   }
 
