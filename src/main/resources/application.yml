@@ -1,1 +1,15 @@
-spring.application.name=complaints
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: complaints_db
+  application:
+    name: complaints-service
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
