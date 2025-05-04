@@ -4,6 +4,9 @@ import com.project.complaints.model.embedded.Address;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class ComplaintCreateDTO {
 
     @NotBlank
@@ -15,6 +18,8 @@ public class ComplaintCreateDTO {
     private Address address;
     private String imageUrl;
     private boolean isAnonymous;
+
+    private Set<String> tagsName = new HashSet<>();
 
     private ComplaintCreateDTO() {
     }
@@ -65,5 +70,13 @@ public class ComplaintCreateDTO {
 
     public void setAnonymous(boolean anonymous) {
         isAnonymous = anonymous;
+    }
+
+    public Set<String> getTagsName() {
+        return tagsName;
+    }
+
+    public void setTagsName(Set<String> tagsName) {
+        this.tagsName = tagsName;
     }
 }

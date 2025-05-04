@@ -5,12 +5,15 @@ import com.project.complaints.model.enums.StatusEnum;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Document(collection = "complaints")
 public class Complaint implements Serializable {
@@ -32,6 +35,9 @@ public class Complaint implements Serializable {
     @LastModifiedDate
     private Instant updatedDate;
     private boolean isAnonymous;
+
+    @DBRef
+    private Set<Tag> tags = new HashSet<>();
 
     private Complaint() {
         this.status = StatusEnum.PENDING;
@@ -115,6 +121,14 @@ public class Complaint implements Serializable {
 
     public void setAnonymous(boolean anonymous) {
         isAnonymous = anonymous;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     @Override

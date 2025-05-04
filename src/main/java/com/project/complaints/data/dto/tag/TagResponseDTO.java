@@ -1,4 +1,4 @@
-package com.project.complaints.model;
+package com.project.complaints.data.dto.tag;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -7,19 +7,18 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Document(collection = "tags")
-public class Tag implements Serializable {
+public class TagResponseDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @Id
     private String id;
     private String name;
 
-    public Tag() {}
+    public TagResponseDTO() {}
 
-    public Tag(String name) {
+    public TagResponseDTO(String id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -42,7 +41,7 @@ public class Tag implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Tag tag = (Tag) o;
+        TagResponseDTO tag = (TagResponseDTO) o;
         return Objects.equals(id, tag.id) && Objects.equals(name, tag.name);
     }
 

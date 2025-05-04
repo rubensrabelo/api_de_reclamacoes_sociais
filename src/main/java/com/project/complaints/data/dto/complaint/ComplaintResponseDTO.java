@@ -1,5 +1,7 @@
 package com.project.complaints.data.dto.complaint;
 
+import com.project.complaints.data.dto.tag.TagResponseDTO;
+import com.project.complaints.model.Tag;
 import com.project.complaints.model.embedded.Address;
 import com.project.complaints.model.enums.StatusEnum;
 import org.springframework.hateoas.RepresentationModel;
@@ -7,7 +9,9 @@ import org.springframework.hateoas.RepresentationModel;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class ComplaintResponseDTO extends RepresentationModel<ComplaintResponseDTO> implements Serializable {
 
@@ -23,6 +27,8 @@ public class ComplaintResponseDTO extends RepresentationModel<ComplaintResponseD
     private Instant createdDate;
     private Instant updatedDate;
     private boolean isAnonymous;
+
+    private Set<TagResponseDTO> tags = new HashSet<>();
 
     private ComplaintResponseDTO() {
     }
@@ -105,6 +111,14 @@ public class ComplaintResponseDTO extends RepresentationModel<ComplaintResponseD
 
     public void setAnonymous(boolean anonymous) {
         isAnonymous = anonymous;
+    }
+
+    public Set<TagResponseDTO> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<TagResponseDTO> tags) {
+        this.tags = tags;
     }
 
     @Override
