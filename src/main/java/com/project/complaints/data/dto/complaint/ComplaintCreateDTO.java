@@ -10,8 +10,7 @@ public class ComplaintCreateDTO {
     @Size(min=1, max = 100)
     private String title;
 
-    @NotBlank
-    @Size(min=1, max = 255)
+    @Size(max = 255)
     private String description;
     private Address address;
     private String imageUrl;
