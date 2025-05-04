@@ -3,6 +3,7 @@ package com.project.complaints.model;
 import com.project.complaints.model.embedded.Address;
 import com.project.complaints.model.enums.StatusEnum;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,6 +18,7 @@ public class Complaint implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @Id
     private String id;
     private String title;
     private String description;

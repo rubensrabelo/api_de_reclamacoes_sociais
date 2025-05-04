@@ -5,6 +5,7 @@ import com.project.complaints.data.dto.complaint.ComplaintCreateDTO;
 import com.project.complaints.data.dto.complaint.ComplaintResponseDTO;
 import com.project.complaints.data.dto.complaint.ComplaintUpdateDTO;
 import com.project.complaints.model.Complaint;
+import com.project.complaints.model.enums.StatusEnum;
 import com.project.complaints.repository.ComplaintRepository;
 import com.project.complaints.service.exceptions.*;
 import org.modelmapper.ModelMapper;
