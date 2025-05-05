@@ -1,6 +1,5 @@
 package com.project.complaints.service;
 
-import com.project.complaints.data.dto.tag.TagResponseDTO;
 import com.project.complaints.model.Tag;
 import com.project.complaints.repository.TagRepository;
 import org.modelmapper.ModelMapper;
@@ -17,9 +16,9 @@ public class TagService {
         this.modelMapper = modelMapper;
     }
 
-    public TagResponseDTO createOrGetTag(String name) {
+    public Tag createOrGetTag(String name) {
         Tag object = repository.findByNameIgnoreCase(name);
-        if (object != null) object = repository.save(new Tag(name));
-        return modelMapper.map(object, TagResponseDTO.class);
+        if (object == null) object = repository.save(new Tag(name));
+        return object;
     }
 }

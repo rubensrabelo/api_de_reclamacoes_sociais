@@ -4,8 +4,9 @@ import com.project.complaints.controller.ComplaintController;
 import com.project.complaints.data.dto.complaint.ComplaintCreateDTO;
 import com.project.complaints.data.dto.complaint.ComplaintResponseDTO;
 import com.project.complaints.data.dto.complaint.ComplaintUpdateDTO;
+import com.project.complaints.data.dto.tag.TagResponseDTO;
 import com.project.complaints.model.Complaint;
-import com.project.complaints.model.enums.StatusEnum;
+import com.project.complaints.model.Tag;
 import com.project.complaints.repository.ComplaintRepository;
 import com.project.complaints.service.exceptions.*;
 import org.modelmapper.ModelMapper;
@@ -17,6 +18,9 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -24,15 +28,18 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ComplaintService {
 
     private final ComplaintRepository complaintRepository;
+    private final TagService tagService;
     private final ModelMapper modelMapper;
     private final PagedResourcesAssembler<ComplaintResponseDTO> assembler;
 
     public ComplaintService(
             ComplaintRepository complaintRepository,
+            TagService tagService,
             ModelMapper modelMapper,
             PagedResourcesAssembler<ComplaintResponseDTO> assembler
             ) {
         this.complaintRepository = complaintRepository;
+        this.tagService = tagService;
         this.modelMapper = modelMapper;
         this.assembler = assembler;
     }
@@ -77,8 +84,16 @@ public class ComplaintService {
         if(createDTO.getDescription().length() > 255)
             throw new InvalidDescriptionSizeException("The description field cannot exceed 255 characters.");
 
+        Set<Tag> tags = createDTO.getTagsName().stream()
+                .map(tagService::createOrGetTag)
+                .collect(Collectors.toSet());
+
+
         Complaint object = modelMapper.map(createDTO, Complaint.class);
+        object.setTags(tags);
+
         object = complaintRepository.save(object);
+
         ComplaintResponseDTO dto = modelMapper.map(object, ComplaintResponseDTO.class);
         addHateoasLinks(dto);
         return dto;
