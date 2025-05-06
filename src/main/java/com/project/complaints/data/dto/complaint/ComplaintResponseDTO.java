@@ -1,6 +1,7 @@
 package com.project.complaints.data.dto.complaint;
 
 import com.project.complaints.data.dto.tag.TagResponseDTO;
+import com.project.complaints.data.dto.user.UserResponseDTO;
 import com.project.complaints.model.Tag;
 import com.project.complaints.model.embedded.Address;
 import com.project.complaints.model.enums.StatusEnum;
@@ -28,17 +29,19 @@ public class ComplaintResponseDTO extends RepresentationModel<ComplaintResponseD
     private Instant updatedDate;
     private boolean isAnonymous;
 
+    private UserResponseDTO user;
     private Set<TagResponseDTO> tags = new HashSet<>();
 
     private ComplaintResponseDTO() {
     }
 
-    public ComplaintResponseDTO(String title, String description, Address address, String imageUrl, boolean isAnonymous) {
+    public ComplaintResponseDTO(String title, String description, Address address, String imageUrl, boolean isAnonymous, UserResponseDTO user) {
         this.title = title;
         this.description = description;
         this.address = address;
         this.imageUrl = imageUrl;
         this.isAnonymous = isAnonymous;
+        this.user = user;
     }
 
     public String getId() {
@@ -111,6 +114,14 @@ public class ComplaintResponseDTO extends RepresentationModel<ComplaintResponseD
 
     public void setAnonymous(boolean anonymous) {
         isAnonymous = anonymous;
+    }
+
+    public UserResponseDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserResponseDTO user) {
+        this.user = user;
     }
 
     public Set<TagResponseDTO> getTags() {

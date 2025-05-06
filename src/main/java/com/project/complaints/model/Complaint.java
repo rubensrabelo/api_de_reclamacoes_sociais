@@ -37,18 +37,22 @@ public class Complaint implements Serializable {
     private boolean isAnonymous;
 
     @DBRef
+    private User user;
+
+    @DBRef
     private Set<Tag> tags = new HashSet<>();
 
     private Complaint() {
         this.status = StatusEnum.PENDING;
     }
 
-    public Complaint(String title, String description, Address address, String imageUrl, boolean isAnonymous) {
+    public Complaint(String title, String description, Address address, String imageUrl, boolean isAnonymous, User user) {
         this.title = title;
         this.description = description;
         this.address = address;
         this.imageUrl = imageUrl;
         this.isAnonymous = isAnonymous;
+        this.user = user;
     }
 
     public String getId() {
@@ -121,6 +125,14 @@ public class Complaint implements Serializable {
 
     public void setAnonymous(boolean anonymous) {
         isAnonymous = anonymous;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Tag> getTags() {
