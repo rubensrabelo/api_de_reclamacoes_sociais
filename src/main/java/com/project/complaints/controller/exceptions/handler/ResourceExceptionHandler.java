@@ -1,6 +1,7 @@
 package com.project.complaints.controller.exceptions.handler;
 
 import com.project.complaints.controller.exceptions.StandardError;
+import com.project.complaints.infra.security.exceptions.TokenException;
 import com.project.complaints.service.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,14 @@ public class ResourceExceptionHandler {
     public ResponseEntity<StandardError> invalidDescriptionSizeException(InvalidDescriptionSizeException e, HttpServletRequest request) {
         String error = "Invalid description size";
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(TokenException.class)
+    public ResponseEntity<StandardError> invalidDescriptionSizeException(TokenException e, HttpServletRequest request) {
+        String error = "Token error";
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
