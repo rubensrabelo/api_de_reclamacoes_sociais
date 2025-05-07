@@ -1,8 +1,7 @@
 package com.project.complaints.data.dto.complaint;
 
 import com.project.complaints.data.dto.tag.TagResponseDTO;
-import com.project.complaints.data.dto.user.UserResponseDTO;
-import com.project.complaints.model.Tag;
+import com.project.complaints.data.dto.auth.RegisterResponseDTO;
 import com.project.complaints.model.embedded.Address;
 import com.project.complaints.model.enums.StatusEnum;
 import org.springframework.hateoas.RepresentationModel;
@@ -29,13 +28,13 @@ public class ComplaintResponseDTO extends RepresentationModel<ComplaintResponseD
     private Instant updatedDate;
     private boolean isAnonymous;
 
-    private UserResponseDTO user;
+    private RegisterResponseDTO user;
     private Set<TagResponseDTO> tags = new HashSet<>();
 
     private ComplaintResponseDTO() {
     }
 
-    public ComplaintResponseDTO(String title, String description, Address address, String imageUrl, boolean isAnonymous, UserResponseDTO user) {
+    public ComplaintResponseDTO(String title, String description, Address address, String imageUrl, boolean isAnonymous, RegisterResponseDTO user) {
         this.title = title;
         this.description = description;
         this.address = address;
@@ -116,11 +115,11 @@ public class ComplaintResponseDTO extends RepresentationModel<ComplaintResponseD
         isAnonymous = anonymous;
     }
 
-    public UserResponseDTO getUser() {
+    public RegisterResponseDTO getUser() {
         return user;
     }
 
-    public void setUser(UserResponseDTO user) {
+    public void setUser(RegisterResponseDTO user) {
         this.user = user;
     }
 

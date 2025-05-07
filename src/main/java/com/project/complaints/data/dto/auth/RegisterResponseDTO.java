@@ -1,14 +1,10 @@
-package com.project.complaints.data.dto.user;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.hateoas.RepresentationModel;
+package com.project.complaints.data.dto.auth;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class UserResponseDTO implements Serializable {
+public class RegisterResponseDTO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -17,9 +13,9 @@ public class UserResponseDTO implements Serializable {
     private String name;
     private String email;
 
-    public UserResponseDTO() {}
+    public RegisterResponseDTO() {}
 
-    public UserResponseDTO(String name, String email, String password) {
+    public RegisterResponseDTO(String name, String email, String password) {
         this.name = name;
         this.email = email;
     }
@@ -51,7 +47,7 @@ public class UserResponseDTO implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        UserResponseDTO that = (UserResponseDTO) o;
+        RegisterResponseDTO that = (RegisterResponseDTO) o;
         return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email);
     }
 
