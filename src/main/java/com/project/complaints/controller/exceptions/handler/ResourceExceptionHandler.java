@@ -69,4 +69,45 @@ public class ResourceExceptionHandler {
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
+
+    @ExceptionHandler(EmptyNameException.class)
+    public ResponseEntity<StandardError> emptyNameException(EmptyNameException e, HttpServletRequest request) {
+        String error = "Empty name";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(EmptyEmailException.class)
+    public ResponseEntity<StandardError> emptyEmailException(EmptyEmailException e, HttpServletRequest request) {
+        String error = "Email is empty";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(InvalidNameSizeException.class)
+    public ResponseEntity<StandardError> invalidNameSizeException(InvalidNameSizeException e, HttpServletRequest request) {
+        String error = "Invalid name size";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(InvalidEmailException.class)
+    public ResponseEntity<StandardError> invalidEmailException(InvalidEmailException e, HttpServletRequest request) {
+        String error = "Invalid email";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+
+    @ExceptionHandler(EmptyPasswordException.class)
+    public ResponseEntity<StandardError> emptyPasswordException(EmptyPasswordException e, HttpServletRequest request) {
+        String error = "Password is empty";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
 }
