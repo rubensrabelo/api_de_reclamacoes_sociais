@@ -4,10 +4,12 @@ import com.project.complaints.controller.ComplaintController;
 import com.project.complaints.data.dto.complaint.ComplaintCreateDTO;
 import com.project.complaints.data.dto.complaint.ComplaintResponseDTO;
 import com.project.complaints.data.dto.complaint.ComplaintUpdateDTO;
-import com.project.complaints.data.dto.tag.TagResponseDTO;
+import com.project.complaints.infra.security.TokenService;
 import com.project.complaints.model.Complaint;
 import com.project.complaints.model.Tag;
+import com.project.complaints.model.User;
 import com.project.complaints.repository.ComplaintRepository;
+import com.project.complaints.repository.UserRepository;
 import com.project.complaints.service.exceptions.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
@@ -30,17 +32,23 @@ public class ComplaintService {
     private final ComplaintRepository complaintRepository;
     private final TagService tagService;
     private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
+    private final TokenService tokenService;
     private final PagedResourcesAssembler<ComplaintResponseDTO> assembler;
 
     public ComplaintService(
             ComplaintRepository complaintRepository,
             TagService tagService,
             ModelMapper modelMapper,
+            UserRepository userRepository,
+            TokenService tokenService,
             PagedResourcesAssembler<ComplaintResponseDTO> assembler
             ) {
         this.complaintRepository = complaintRepository;
         this.tagService = tagService;
         this.modelMapper = modelMapper;
+        this.userRepository = userRepository;
+        this.tokenService = tokenService;
         this.assembler = assembler;
     }
 
@@ -71,7 +79,7 @@ public class ComplaintService {
         return dto;
     }
 
-    public ComplaintResponseDTO create(ComplaintCreateDTO createDTO) {
+    public ComplaintResponseDTO create(ComplaintCreateDTO createDTO, String token) {
         if(createDTO == null)
             throw new RequiredObjectIsNullException("Its is not allowed to persist a null object.");
 
@@ -88,9 +96,11 @@ public class ComplaintService {
                 .map(tagService::createOrGetTag)
                 .collect(Collectors.toSet());
 
+        var user = getUserByToken(token);
 
         Complaint object = modelMapper.map(createDTO, Complaint.class);
         object.setTags(tags);
+        object.setUser(user);
 
         object = complaintRepository.save(object);
 
@@ -140,6 +150,13 @@ public class ComplaintService {
         dto.add(linkTo(methodOn(ComplaintController.class).update(dto.getId(), dtoUpdated)).withRel("update").withType("PUT"));
 
         dto.add(linkTo(methodOn(ComplaintController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
+    }
+
+    private User getUserByToken(String token) {
+        token = token.replace("Bearer ", "");
+        var login = tokenService.validateToken(token);
+        return userRepository.findByEmail(login)
+                .orElseThrow(() -> new ObjectNotFoundException("User with email " + login + " not found."));
     }
 
     private void updateData(Complaint object, ComplaintUpdateDTO updateDTO) {

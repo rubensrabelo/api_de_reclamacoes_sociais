@@ -14,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 public interface ComplaintControllerDocs {
@@ -76,7 +77,10 @@ public interface ComplaintControllerDocs {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
-    ResponseEntity<ComplaintResponseDTO> create(@RequestBody ComplaintCreateDTO dtoCreate);
+    ResponseEntity<ComplaintResponseDTO> create(
+            @RequestBody ComplaintCreateDTO dtoCreate,
+            @RequestHeader("Authorization") String token
+    );
 
     @Operation(summary = "Updates a Complaint's information",
             description = "Updates a Complaint's information by passing in a JSON representation of the updated Complaint.",

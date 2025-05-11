@@ -50,11 +50,19 @@ public class ComplaintController implements ComplaintControllerDocs {
             consumes = {MediaType.APPLICATION_JSON_VALUE}
     )
     @Override
-    public ResponseEntity<ComplaintResponseDTO> create(@RequestBody ComplaintCreateDTO dtoCreate) {
-        ComplaintResponseDTO response = complaintService.create(dtoCreate);
+    public ResponseEntity<ComplaintResponseDTO> create(
+            @RequestBody ComplaintCreateDTO dtoCreate,
+            @RequestHeader("Authorization") String token
+            ) {
+        ComplaintResponseDTO response = complaintService.create(dtoCreate, token);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(response.getId()).toUri();
         return ResponseEntity.created(uri).body(response);
+    }
+
+    @SuppressWarnings("unused")
+    public ResponseEntity<ComplaintResponseDTO> create(ComplaintCreateDTO dto) {
+        return null;
     }
 
     @PutMapping(
