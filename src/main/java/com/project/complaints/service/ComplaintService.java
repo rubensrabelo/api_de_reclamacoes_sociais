@@ -13,6 +13,10 @@ import com.project.complaints.repository.UserRepository;
 import com.project.complaints.service.exceptions.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -34,6 +38,7 @@ public class ComplaintService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final TokenService tokenService;
+    private final MongoTemplate mongoTemplate;
     private final PagedResourcesAssembler<ComplaintResponseDTO> assembler;
 
     public ComplaintService(
@@ -42,6 +47,7 @@ public class ComplaintService {
             ModelMapper modelMapper,
             UserRepository userRepository,
             TokenService tokenService,
+            MongoTemplate mongoTemplate,
             PagedResourcesAssembler<ComplaintResponseDTO> assembler
             ) {
         this.complaintRepository = complaintRepository;
@@ -49,6 +55,7 @@ public class ComplaintService {
         this.modelMapper = modelMapper;
         this.userRepository = userRepository;
         this.tokenService = tokenService;
+        this.mongoTemplate = mongoTemplate;
         this.assembler = assembler;
     }
 
@@ -129,6 +136,12 @@ public class ComplaintService {
         ComplaintResponseDTO dto = modelMapper.map(object, ComplaintResponseDTO.class);
         addHateoasLinks(dto);
         return dto;
+    }
+
+    public void updateIsAnonymous(String id, boolean isAnonymous) {
+        Query query = new Query(Criteria.where("id").is(id));
+        Update update = new Update();
+        mongoTemplate.updateFirst(query, update, Complaint.class);
     }
 
     public void delete(String id) {

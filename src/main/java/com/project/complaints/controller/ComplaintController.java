@@ -78,6 +78,13 @@ public class ComplaintController implements ComplaintControllerDocs {
         return ResponseEntity.ok().body(complaintService.update(id, dtoUpdate));
     }
 
+    @PutMapping("/{id}/anonymous")
+    @Override
+    public ResponseEntity<Void> updateIsAnonymous(@PathVariable String id, @RequestBody Boolean isAnonymous) {
+        complaintService.updateIsAnonymous(id, isAnonymous);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping(value = "/{id}")
     @Override
     public ResponseEntity<Void> delete(@PathVariable String id) {

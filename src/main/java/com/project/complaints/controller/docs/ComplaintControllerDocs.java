@@ -100,6 +100,24 @@ public interface ComplaintControllerDocs {
     )
     ResponseEntity<ComplaintResponseDTO> update(@PathVariable("id") String id, @RequestBody ComplaintUpdateDTO dtoUpdate);
 
+    @Operation(summary = "Updates the 'anonymous' status of a Complaint",
+            description = "Updates only the 'isAnonymous' property of a Complaint based on its ID.",
+            tags = {"Complaints"},
+            responses = {
+                    @ApiResponse(
+                            description = "No Content",
+                            responseCode = "204",
+                            content = @Content
+                    ),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
+            }
+    )
+    ResponseEntity<Void> updateIsAnonymous(@PathVariable("id") String id, @RequestBody Boolean isAnonymous);
+
+
     @Operation(summary = "Deletes a Complaint",
             description = "Deletes a specific Complaint by their ID",
             tags = {"Complaints"},
