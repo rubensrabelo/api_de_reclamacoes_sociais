@@ -1,5 +1,6 @@
 package com.project.complaints.controller;
 
+import com.project.complaints.controller.docs.AuthControllerDocs;
 import com.project.complaints.data.dto.auth.LoginRequestDTO;
 import com.project.complaints.data.dto.auth.LoginResponseDTO;
 import com.project.complaints.data.dto.auth.RegisterRequestDTO;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
+public class AuthController implements AuthControllerDocs {
 
     private final AuthService authService;
 
@@ -22,12 +23,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @Override
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO dto) {
         LoginResponseDTO responseDTO = authService.login(dto);
         return ResponseEntity.ok().body(responseDTO);
     }
 
     @PostMapping("/register")
+    @Override
     public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequestDTO dto) {
         RegisterResponseDTO responseDTO = authService.register(dto);
         return ResponseEntity.ok().body(responseDTO);
