@@ -6,6 +6,7 @@ import com.project.complaints.data.dto.auth.LoginResponseDTO;
 import com.project.complaints.data.dto.auth.RegisterRequestDTO;
 import com.project.complaints.data.dto.auth.RegisterResponseDTO;
 import com.project.complaints.service.AuthService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,14 +23,22 @@ public class AuthController implements AuthControllerDocs {
         this.authService = authService;
     }
 
-    @PostMapping("/login")
+    @PostMapping(
+            value = "/login",
+            produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE}
+    )
     @Override
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO dto) {
         LoginResponseDTO responseDTO = authService.login(dto);
         return ResponseEntity.ok().body(responseDTO);
     }
 
-    @PostMapping("/register")
+    @PostMapping(
+            value = "/register",
+            produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE}
+    )
     @Override
     public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequestDTO dto) {
         RegisterResponseDTO responseDTO = authService.register(dto);
