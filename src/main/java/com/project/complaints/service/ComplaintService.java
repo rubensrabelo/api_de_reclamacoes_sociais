@@ -143,11 +143,8 @@ public class ComplaintService {
         dto.add(linkTo(methodOn(ComplaintController.class).findAll(0, 10, "desc")).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(ComplaintController.class).findById(dto.getId())).withSelfRel().withType("GET"));
 
-        ComplaintCreateDTO dtoCreated = new ComplaintCreateDTO(dto.getTitle(), dto.getDescription(), dto.getAddress(), dto.getImageUrl(), dto.isAnonymous());
-        dto.add(linkTo(methodOn(ComplaintController.class).create(dtoCreated)).withRel("create").withType("POST"));
-
-        ComplaintUpdateDTO dtoUpdated = new ComplaintUpdateDTO(dto.getTitle(), dto.getDescription(), dto.getImageUrl());
-        dto.add(linkTo(methodOn(ComplaintController.class).update(dto.getId(), dtoUpdated)).withRel("update").withType("PUT"));
+        dto.add(linkTo(methodOn(ComplaintController.class).create(null)).withRel("create").withType("POST"));
+        dto.add(linkTo(methodOn(ComplaintController.class).update(dto.getId(), null)).withRel("update").withType("PUT"));
 
         dto.add(linkTo(methodOn(ComplaintController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
