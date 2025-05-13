@@ -15,7 +15,7 @@ public interface AddressControllerDocs {
 
     @Operation(summary = "Updates a Complaint's address",
             description = "Updates the address of a Complaint by its ID, passing a JSON representation of the new address.",
-            tags = {"Complaints"},
+            tags = {"Address"},
             responses = {
                     @ApiResponse(
                             description = "Success",

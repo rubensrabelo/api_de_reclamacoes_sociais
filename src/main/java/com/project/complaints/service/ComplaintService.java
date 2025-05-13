@@ -4,6 +4,7 @@ import com.project.complaints.controller.ComplaintController;
 import com.project.complaints.data.dto.complaint.ComplaintCreateDTO;
 import com.project.complaints.data.dto.complaint.ComplaintResponseDTO;
 import com.project.complaints.data.dto.complaint.ComplaintUpdateDTO;
+import com.project.complaints.data.dto.complaint.UpdateIsAnonymousDTO;
 import com.project.complaints.infra.security.TokenService;
 import com.project.complaints.model.Complaint;
 import com.project.complaints.model.Tag;
@@ -138,9 +139,9 @@ public class ComplaintService {
         return dto;
     }
 
-    public void updateIsAnonymous(String id, boolean isAnonymous) {
+    public void updateIsAnonymous(String id, UpdateIsAnonymousDTO dto) {
         Query query = new Query(Criteria.where("id").is(id));
-        Update update = new Update();
+        Update update = new Update().set("isAnonymous", dto.isAnonymous());
         mongoTemplate.updateFirst(query, update, Complaint.class);
     }
 

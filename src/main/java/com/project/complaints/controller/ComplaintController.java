@@ -4,6 +4,7 @@ import com.project.complaints.controller.docs.ComplaintControllerDocs;
 import com.project.complaints.data.dto.complaint.ComplaintCreateDTO;
 import com.project.complaints.data.dto.complaint.ComplaintResponseDTO;
 import com.project.complaints.data.dto.complaint.ComplaintUpdateDTO;
+import com.project.complaints.data.dto.complaint.UpdateIsAnonymousDTO;
 import com.project.complaints.service.ComplaintService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -80,8 +81,8 @@ public class ComplaintController implements ComplaintControllerDocs {
 
     @PutMapping("/{id}/anonymous")
     @Override
-    public ResponseEntity<Void> updateIsAnonymous(@PathVariable String id, @RequestBody Boolean isAnonymous) {
-        complaintService.updateIsAnonymous(id, isAnonymous);
+    public ResponseEntity<Void> updateIsAnonymous(@PathVariable String id, @RequestBody UpdateIsAnonymousDTO dto) {
+        complaintService.updateIsAnonymous(id, dto);
         return ResponseEntity.noContent().build();
     }
 

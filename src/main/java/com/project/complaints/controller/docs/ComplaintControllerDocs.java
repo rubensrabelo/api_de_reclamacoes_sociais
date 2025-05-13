@@ -3,6 +3,7 @@ package com.project.complaints.controller.docs;
 import com.project.complaints.data.dto.complaint.ComplaintCreateDTO;
 import com.project.complaints.data.dto.complaint.ComplaintResponseDTO;
 import com.project.complaints.data.dto.complaint.ComplaintUpdateDTO;
+import com.project.complaints.data.dto.complaint.UpdateIsAnonymousDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -115,7 +116,7 @@ public interface ComplaintControllerDocs {
                     @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content)
             }
     )
-    ResponseEntity<Void> updateIsAnonymous(@PathVariable("id") String id, @RequestBody Boolean isAnonymous);
+    ResponseEntity<Void> updateIsAnonymous(@PathVariable("id") String id, @RequestBody UpdateIsAnonymousDTO dto);
 
 
     @Operation(summary = "Deletes a Complaint",

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/address")
+@RequestMapping("/address/v1")
 public class AddressController implements AddressControllerDocs {
 
     private final AddressService addressService;
